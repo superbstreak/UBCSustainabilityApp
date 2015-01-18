@@ -1,0 +1,121 @@
+package ubc.cs.cpsc210.sustainabilityapp;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import android.app.Activity;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+public class WeatherActivity extends Activity
+{
+	//===================DEFINE VALUES==================
+	String temp;
+	String date;
+	String cond;
+	String wind;
+	String humd;
+	ImageView wpic = null; //weather picture
+	List<String> wdata = new ArrayList<String>();
+	//======================START========================
+	public void getWeatherService(TextView tvtemp, TextView tvdate,  TextView tvcond, TextView tvwind, TextView tvhumd)  
+	{
+		InputStream inputXML = null;
+		try{
+			inputXML = new URL("http://weather.yahooapis.com/forecastrss?p=CAXX0518&u=c").openConnection().getInputStream();
+		
+			DocumentBuilderFactory processor = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = processor.newDocumentBuilder();
+			Document doc = builder.parse(inputXML);
+			NodeList atmosphere = doc.getElementsByTagName("yweather:atmosphere");
+			NodeList condition = doc.getElementsByTagName("yweather:condition");
+			NodeList windinfo = doc.getElementsByTagName("yweather:wind");
+			NodeList forcast = doc.getElementsByTagName("yweather:forecast");
+			if(atmosphere.getLength() > 0)
+			{
+				Element e = (Element)atmosphere.item(0);
+				humd = "Humidity: "+e.getAttribute("humidity")+" %";
+			}
+			if(condition.getLength() > 0)
+			{
+				Element e = (Element)condition.item(0);
+				cond = "Condition: "+e.getAttribute("text");
+				temp = "Temperature: "+e.getAttribute("temp") + " C";
+				date = "Last Update: "+e.getAttribute("date")+" from YaHoo Weather";
+			}
+			if(windinfo.getLength() > 0)
+			{
+				Element e = (Element)windinfo.item(0);
+				wind = "Wind Speed: "+e.getAttribute("speed")+" km/h";
+			}
+			if (forcast.getLength() > 0)
+			{
+				//save for later, last implementation
+			}
+		}
+		catch(ParserConfigurationException e)
+		{
+			Toast.makeText(WeatherActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+		}
+		catch(SAXException e)
+		{
+			Toast.makeText(WeatherActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+		}
+		catch(IOException e)
+		{
+			Toast.makeText(WeatherActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+		}
+		finally {
+			tvtemp.setText(temp);
+			tvdate.setText(date);
+			tvcond.setText(cond);
+			tvwind.setText(wind);
+			tvhumd.setText(humd);
+			try
+			{
+				if(inputXML != null)
+				{
+					inputXML.close();
+				}
+			}
+			catch(IOException e)
+			{
+				Toast.makeText(WeatherActivity.this, e.toString(), Toast.LENGTH_LONG).show();
+			}
+		}
+		
+	}
+}
+/*
+protected void onPostExecute(String result) {
+System.out.println(ÒPOST EXECUTEÓ);
+if(dialog.isShowing())
+dialog.dismiss();
+tempText.setText(ÒTemperature: Ò+temperature);
+conditionText.setText(ÒCondition: Ò+condition);
+dateText.setText(ÒDate: Ò+date);
+humidityText.setText(ÒHumidity: Ò+humidity);
+windText.setText(ÒWind: Ò+wind);
+image.setImageBitmap(icon);
+day1.setText(weather.get(3));
+day2.setText(weather.get(4));
+day3.setText(weather.get(5));
+day4.setText(weather.get(6)); */

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textview1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:text="Current Weather Condition at UBC"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+    
+      <ImageView
+        android:id="@+id/iv_wpic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="85sp"
+        android:layout_marginRight="85sp"
+        android:layout_marginTop="10sp"
+        android:src="@drawable/na"/>
+
+    <TextView
+        android:id="@+id/tv_temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="45sp"
+        android:layout_marginRight="45sp"
+        android:layout_marginTop="30sp"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_cond"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="45sp"
+        android:layout_marginRight="45sp"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_humd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="45sp"
+        android:layout_marginRight="45sp"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_wind"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="45sp"
+        android:layout_marginRight="45sp"
+        android:textSize="18sp" />
+    
+    <TextView
+        android:id="@+id/tv_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70sp"
+        android:textColor="#8C8C88"
+        android:textSize="10sp" />
+
+</LinearLayout>
